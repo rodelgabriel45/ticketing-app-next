@@ -1,14 +1,11 @@
 import Link from 'next/link';
 import ToggleMode from '@/components/ToggleMode';
+import MainNavLinks from './MainNavLinks';
 
 const MainNav = () => {
   return (
     <div className='flex justify-between'>
-      <div className='flex gap-2 items-center'>
-        <Link href='/'>Dashboard</Link>
-        <Link href='/tickets'>Tickets</Link>
-        <Link href='/users'>Users</Link>
-      </div>
+      <MainNavLinks />
 
       <div className='flex gap-2 items-center'>
         <Link href='/'>Logout</Link>
