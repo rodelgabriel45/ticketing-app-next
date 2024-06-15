@@ -1,10 +1,12 @@
 'use client';
 
+import { useState } from 'react';
 import { z } from 'zod';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
+import toast from 'react-hot-toast';
 
 import {
   Form,
@@ -22,16 +24,45 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 type TicketFormData = z.infer<typeof ticketSchema>;
 
 const TicketForm = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
   const form = useForm<TicketFormData>({
     resolver: zodResolver(ticketSchema),
   });
 
   const onSubmit = async (values: z.infer<typeof ticketSchema>) => {
-    console.log(values);
+    try {
+      setIsSubmitting(true);
+
+      const res = await fetch('/api/tickets', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || data);
+      }
+
+      console.log(data);
+      toast.success('Ticket Submitted');
+      router.push('/tickets');
+      router.refresh();
+    } catch (error: any) {
+      toast.error(error.message || error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -111,6 +142,9 @@ const TicketForm = () => {
               )}
             />
           </div>
+          <Button type='submit' disabled={isSubmitting}>
+            {isSubmitting ? 'Submitting...' : 'Submit'}
+          </Button>
         </form>
       </Form>
     </div>
