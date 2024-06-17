@@ -66,7 +66,6 @@ const TicketForm = ({ ticket }: Props) => {
         throw new Error(data.message || data);
       }
 
-      console.log(data);
       toast.success('Ticket Submitted');
       router.push('/tickets');
       router.refresh();
