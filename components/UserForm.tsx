@@ -65,7 +65,9 @@ const UserForm = ({ user }: Props) => {
         throw new Error(data.message || data);
       }
 
-      toast.success('Account Created');
+      toast.success(
+        user ? 'User Updated Successfully' : 'Account Created Successfully'
+      );
       router.push('/tickets');
       router.refresh();
     } catch (error: any) {

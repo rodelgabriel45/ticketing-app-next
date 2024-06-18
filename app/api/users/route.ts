@@ -26,5 +26,7 @@ export const POST = async (request: NextRequest) => {
     data: { ...body },
   });
 
-  return NextResponse.json(newUser, { status: 201 });
+  const { password, ...userWithoutPassword } = newUser;
+
+  return NextResponse.json(userWithoutPassword, { status: 201 });
 };
