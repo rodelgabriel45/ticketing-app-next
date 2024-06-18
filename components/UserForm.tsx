@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { z } from 'zod';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
 
@@ -62,16 +62,17 @@ const UserForm = ({ user }: Props) => {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.message || data);
+        throw new Error(data.error || data);
       }
 
       toast.success(
         user ? 'User Updated Successfully' : 'Account Created Successfully'
       );
-      router.push('/tickets');
+      router.push('/users');
+      form.reset();
       router.refresh();
     } catch (error: any) {
-      toast.error(error.message || error);
+      toast.error(error.message);
     } finally {
       setIsSubmitting(false);
     }
