@@ -8,7 +8,7 @@ const options: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       id: 'password',
-      name: 'Username and Password',
+      name: 'Credentials',
       credentials: {
         username: {
           label: 'Username',
