@@ -63,7 +63,7 @@ const TicketForm = ({ ticket }: Props) => {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.message || data);
+        throw new Error(data.error || data.message || data);
       }
 
       toast.success('Ticket Submitted');

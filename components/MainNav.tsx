@@ -3,6 +3,7 @@ import ToggleMode from '@/components/ToggleMode';
 import MainNavLinks from './MainNavLinks';
 import { getServerSession } from 'next-auth';
 import options from '@/app/api/auth/[...nextauth]/options';
+import prisma from '@/prisma/db';
 
 const MainNav = async () => {
   const session = await getServerSession(options);
@@ -12,6 +13,7 @@ const MainNav = async () => {
       <MainNavLinks />
 
       <div className='flex gap-2 items-center'>
+        <span className='mr-7'>{session?.user.name}</span>
         {session ? (
           <Link href='/api/auth/signout?callbackUrl=/'>Logout</Link>
         ) : (
