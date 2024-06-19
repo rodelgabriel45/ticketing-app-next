@@ -10,7 +10,7 @@ const MainNav = async () => {
 
   return (
     <div className='flex justify-between'>
-      <MainNavLinks />
+      <MainNavLinks role={session?.user.role} />
 
       <div className='flex gap-2 items-center'>
         <span className='mr-7'>{session?.user.name}</span>
