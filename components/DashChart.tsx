@@ -15,11 +15,11 @@ interface dataProps {
 
 const DashChart = ({ data }: dataProps) => {
   return (
-    <Card>
+    <Card className='col-span-4'>
       <CardHeader>
         <CardTitle>Ticket Counts</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className='pl-4'>
         <ResponsiveContainer width='100%' height={367}>
           <BarChart data={data}>
             <XAxis dataKey='name' stroke='#888888' fontSize={12} />
