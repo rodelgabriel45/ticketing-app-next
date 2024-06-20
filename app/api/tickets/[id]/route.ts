@@ -16,6 +16,10 @@ export const PATCH = async (request: NextRequest, { params }: Props) => {
     return NextResponse.json({ error: 'Not Authenticated' }, { status: 401 });
   }
 
+  if (session.user.role !== 'ADMIN' && session.user.role !== 'TECH') {
+    return NextResponse.json({ error: 'Not Authorized.' }, { status: 401 });
+  }
+
   const body = await request.json();
   const validation = ticketPatchSchema.safeParse(body);
 
@@ -44,6 +48,19 @@ export const PATCH = async (request: NextRequest, { params }: Props) => {
 };
 
 export const DELETE = async (request: NextRequest, { params }: Props) => {
+  const session = await getServerSession(options);
+
+  if (!session) {
+    return NextResponse.json({ error: 'Not Authenticated' }, { status: 401 });
+  }
+
+  if (session.user.role !== 'ADMIN') {
+    return NextResponse.json(
+      { error: 'Not authorized to delete ticket.' },
+      { status: 401 }
+    );
+  }
+
   const ticket = await prisma.ticket.findUnique({
     where: { id: parseInt(params.id) },
   });

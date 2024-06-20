@@ -43,7 +43,7 @@ const AssignTicket = ({ ticket, users }: Props) => {
         userId === '0' ? 'Assigned user removed' : 'User successfully assigned'
       );
     } catch (error: any) {
-      toast.error('Cannot assign to user.');
+      toast.error(error.message);
     } finally {
       setIsAssigning(false);
     }
