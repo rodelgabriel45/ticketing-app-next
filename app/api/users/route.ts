@@ -7,15 +7,15 @@ import prisma from '@/prisma/db';
 import options from '../auth/[...nextauth]/options';
 
 export const POST = async (request: NextRequest) => {
-  const session = await getServerSession(options);
+  // const session = await getServerSession(options);
 
-  if (!session) {
-    return NextResponse.json({ error: 'Not Authenticated' }, { status: 401 });
-  }
+  // if (!session) {
+  //   return NextResponse.json({ error: 'Not Authenticated' }, { status: 401 });
+  // }
 
-  if (session.user.role !== 'ADMIN') {
-    return NextResponse.json({ error: 'Not Authorized' }, { status: 401 });
-  }
+  // if (session.user.role !== 'ADMIN') {
+  //   return NextResponse.json({ error: 'Not Authorized' }, { status: 401 });
+  // }
 
   const body = await request.json();
   const validation = userSchema.safeParse(body);
